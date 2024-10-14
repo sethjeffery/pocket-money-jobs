@@ -23,5 +23,5 @@ export const setModel = <T extends Model>(
   args: T
 ) => kv.hset(`${namespace}:${key}`, { ...args, key })
 
-export const delModel = <T extends Model>(namespace: string, key: string) =>
+export const delModel = (namespace: string, key: string) =>
   kv.del(`${namespace}:${key}`)

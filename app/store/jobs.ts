@@ -2,12 +2,12 @@ import categories from '../constants/categories'
 import { delModel, getAllModels, getModel, Model, setModel } from './model'
 
 export interface Job extends Model {
-  name: string
-  money: number
   assignedTo: string | null
   category: keyof typeof categories
   completedAt: string | null
   createdAt: string
+  money: number
+  name: string
 }
 
 const NAMESPACE = 'jobs'
@@ -30,4 +30,4 @@ export const getJob = async (key: string) =>
 export const setJob = (key: string, args: Job) =>
   setModel<Job>(NAMESPACE, key, args)
 
-export const delJob = (key: string) => delModel<Job>(NAMESPACE, key)
+export const delJob = (key: string) => delModel(NAMESPACE, key)

@@ -1,8 +1,8 @@
 'use client'
 
 import { CssVarsProvider } from '@mui/joy'
-import theme from '../theme'
 import { PropsWithChildren } from 'react'
+import theme from '../theme'
 
 function ClientCssVarsProvider({ children }: PropsWithChildren) {
   return <CssVarsProvider theme={theme}>{children}</CssVarsProvider>

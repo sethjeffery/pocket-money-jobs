@@ -1,6 +1,6 @@
-import type { Metadata } from 'next'
-import CssBaseline from '@mui/joy/CssBaseline'
 import '@fontsource/inter'
+import CssBaseline from '@mui/joy/CssBaseline'
+import type { Metadata } from 'next'
 import ClientCssVarsProvider from './client-css-vars-provider'
 
 export const metadata: Metadata = {
