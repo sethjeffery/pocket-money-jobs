@@ -1,7 +1,7 @@
 import '@fontsource/inter'
-import CssBaseline from '@mui/joy/CssBaseline'
+import CssBaseline from '@mui/material/CssBaseline'
 import type { Metadata } from 'next'
-import ClientCssVarsProvider from './client-css-vars-provider'
+import ClientCssVarsProvider from './components/client-css-vars-provider'
 
 export const metadata: Metadata = {
   title: 'Create Next App',

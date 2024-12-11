@@ -1,27 +1,36 @@
 'use server'
 
 import { BLANK_JOB, delJob, getJob, Job, setJob } from '../store/jobs'
-import { v4 as uuidv4 } from 'uuid'
+import { getMember } from '../store/members'
+import newKey from '../store/new-key'
 
-export async function saveJob(job: Job) {
-  await setJob(job.key || uuidv4(), job)
+export async function saveJob(familyKey: string, job: Job) {
+  return setJob(familyKey, job.key || (await newKey()), job)
 }
 
-export async function assignJob(jobKey: string, assignedTo: string | null) {
-  const job = await getJob(jobKey)
-  await setJob(jobKey, { ...job, assignedTo })
+export async function assignJob(
+  familyKey: string,
+  jobKey: string,
+  memberKey: string | null
+) {
+  const job = await getJob(familyKey, jobKey)
+  const member = memberKey ? await getMember(familyKey, memberKey) : null
+  return setJob(familyKey, jobKey, { ...job, assignedTo: member })
 }
 
-export async function completeJob(jobKey: string) {
-  const job = (await getJob(jobKey)) ?? BLANK_JOB
-  await setJob(jobKey, { ...job, completedAt: new Date().toISOString() })
+export async function completeJob(familyKey: string, jobKey: string) {
+  const job = (await getJob(familyKey, jobKey)) ?? BLANK_JOB
+  return setJob(familyKey, jobKey, {
+    ...job,
+    completedAt: new Date().toISOString(),
+  })
 }
 
-export async function uncompleteJob(jobKey: string) {
-  const job = (await getJob(jobKey)) ?? BLANK_JOB
-  await setJob(jobKey, { ...job, completedAt: null })
+export async function uncompleteJob(familyKey: string, jobKey: string) {
+  const job = (await getJob(familyKey, jobKey)) ?? BLANK_JOB
+  return setJob(familyKey, jobKey, { ...job, completedAt: null })
 }
 
-export async function deleteJob(jobKey: string) {
-  await delJob(jobKey)
+export async function deleteJob(familyKey: string, jobKey: string) {
+  await delJob(familyKey, jobKey)
 }

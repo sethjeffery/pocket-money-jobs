@@ -1,6 +1,6 @@
-import { extendTheme } from '@mui/joy/styles'
+import { extendTheme } from '@mui/material/styles'
 
-declare module '@mui/joy/styles' {
+declare module '@mui/material/styles' {
   // No custom tokens found, you can skip the theme augmentation.
 }
 
@@ -19,18 +19,6 @@ const theme = extendTheme({
           '700': '#6d28d9',
           '800': '#5b21b6',
           '900': '#4c1d95',
-        },
-        neutral: {
-          '50': '#f8fafc',
-          '100': '#f1f5f9',
-          '200': '#e2e8f0',
-          '300': '#cbd5e1',
-          '400': '#94a3b8',
-          '500': '#64748b',
-          '600': '#475569',
-          '700': '#334155',
-          '800': '#1e293b',
-          '900': '#0f172a',
         },
         warning: {
           '50': '#fffbeb',
@@ -56,7 +44,7 @@ const theme = extendTheme({
           '800': '#3f6212',
           '900': '#365314',
         },
-        danger: {
+        error: {
           '50': '#fff1f2',
           '100': '#ffe4e6',
           '200': '#fecdd3',

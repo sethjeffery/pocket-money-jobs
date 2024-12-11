@@ -1,68 +1,44 @@
-import { Box, Stack, Table, Typography } from '@mui/joy'
-import CategoryIcon from '../components/category-icon'
-import Coins from '../components/coins'
-import { getAllJobs } from '../store/jobs'
-import { getAllUsers } from '../store/users'
-import JobActions from './components/job-actions'
-import JobAssignment from './components/job-assignment'
-import NewJobButton from './components/new-job-button'
+import { getAllFamilies } from '@/app/store/families'
+import {
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Grid2 as Grid,
+  Stack,
+  Typography,
+} from '@mui/material'
+import FamilyActions from './components/family-actions'
+import NewFamilyButton from './components/new-family-button'
 
-export default async function Home() {
-  const jobs = await getAllJobs()
-  const users = await getAllUsers()
+export default async function Admin() {
+  const families = await getAllFamilies()
 
   return (
-    <Stack minHeight="100vh" padding={2}>
-      <Typography level="h1" marginBottom={2}>
-        Jobs available
-      </Typography>
-      <Table
-        borderAxis="xBetween"
-        sx={{
-          fontSize: '1.25rem',
-          '--TableCell-headBackground': 'transparent',
-        }}
-      >
-        <thead>
-          <tr>
-            <th>Job</th>
-            <th>Money</th>
-            <th>Assigned to</th>
-            <th style={{ width: '48px' }} />
-          </tr>
-        </thead>
-        <tbody>
-          {jobs.map((job) => (
-            <tr key={job.key}>
-              <td>
-                <Stack alignItems="center" direction="row" gap={1}>
-                  <CategoryIcon category={job.category} />
-                  {job.name}
-                </Stack>
-              </td>
-              <td>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  flexWrap="wrap"
-                  gap={0.5}
-                >
-                  <Coins amount={job.money || 0} />
-                </Stack>
-              </td>
-              <td>
-                <JobAssignment job={job} key={job.key} users={users} />
-              </td>
-              <td>
-                <JobActions job={job} />
-              </td>
-            </tr>
+    <Stack direction="row" minHeight="100vh">
+      <Stack flex="1" minHeight="100vh" padding={2}>
+        <Typography marginBottom={2} variant="h1">
+          Families
+        </Typography>
+        <Grid container spacing={2}>
+          {families.map((family) => (
+            <Grid key={family.key} size={8}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h2">{family.name}</Typography>
+                </CardContent>
+                <CardActions>
+                  <FamilyActions family={family} />
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
-        </tbody>
-      </Table>
-      <Box marginTop={2}>
-        <NewJobButton />
-      </Box>
+        </Grid>
+
+        <Box marginTop={2}>
+          <NewFamilyButton />
+        </Box>
+      </Stack>
     </Stack>
   )
 }
