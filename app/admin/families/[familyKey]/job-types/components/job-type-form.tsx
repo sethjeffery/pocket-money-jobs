@@ -2,8 +2,9 @@
 
 import { deleteJobType, saveJobType } from '@/app/actions/job-types'
 import GenericForm from '@/app/admin/components/generic-form'
+import FieldState from '@/app/components/field-state'
 import { BLANK_JOB_TYPE, JobType } from '@/app/store/job-types'
-import { FormControl, FormHelperText, TextField } from '@mui/material'
+import { FormControl, TextField } from '@mui/material'
 import { Controller, useFormContext } from 'react-hook-form'
 
 interface JobTypeFormProps {
@@ -23,14 +24,12 @@ function FormFields() {
         <FormControl error={!!fieldState.error}>
           <TextField
             autoFocus
-            placeholder="Name"
+            label="Name"
             size="medium"
             {...field}
             slotProps={{ input: { ref } }}
           />
-          {fieldState.error && (
-            <FormHelperText>{fieldState.error?.message}</FormHelperText>
-          )}
+          <FieldState {...fieldState} />
         </FormControl>
       )}
       rules={{ required: 'Name is required' }}

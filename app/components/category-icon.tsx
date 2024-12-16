@@ -1,14 +1,14 @@
 'use client'
 
 import { IconProps } from '@phosphor-icons/react'
-import type { Categories } from '../constants/categories'
-import categories from '../constants/categories'
+import type { JobCategories } from '../constants/job-categories'
+import jobCategories from '../constants/job-categories'
 
 function CategoryIcon({
   category,
   ...props
-}: { category?: Categories } & IconProps) {
-  const { Icon } = categories[category ?? 'general']
+}: { category?: JobCategories } & IconProps) {
+  const { Icon } = jobCategories[category ?? 'general']
   return <Icon {...props} />
 }
 

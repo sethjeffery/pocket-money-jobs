@@ -2,6 +2,7 @@ import {
   Broom,
   NotePencil,
   Person,
+  Ticket,
   TipJar,
 } from '@phosphor-icons/react/dist/ssr'
 
@@ -25,5 +26,10 @@ export const MENU_ITEMS = [
     label: 'Pay outs',
     href: '/admin/families/:familyKey/pay-outs',
     Icon: TipJar,
+  },
+  {
+    label: 'Reward types',
+    href: '/admin/families/:familyKey/reward-types',
+    Icon: Ticket,
   },
 ]

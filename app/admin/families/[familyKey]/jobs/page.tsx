@@ -1,7 +1,18 @@
+import toPoundsPence from '@/app/helpers/to-pounds-pence'
 import { getAllMembers } from '@/app/store/members'
-import { Box, Stack, Table, Typography } from '@mui/material'
+import {
+  Box,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material'
 import CategoryIcon from '../../../../components/category-icon'
-import Coins from '../../../../components/coins'
 import { getAllJobs } from '../../../../store/jobs'
 import JobActions from './components/job-actions'
 import JobAssignment from './components/job-assignment'
@@ -21,51 +32,57 @@ export default async function Admin({
       <Typography marginBottom={2} variant="h1">
         Jobs available
       </Typography>
-      <Table>
-        <thead>
-          <tr>
-            <th>Job</th>
-            <th>Money</th>
-            <th>Assigned to</th>
-            <th style={{ width: '96px' }} />
-          </tr>
-        </thead>
-        <tbody>
-          {jobs.map((job) => (
-            <tr key={job.key}>
-              <td>
-                <Stack alignItems="center" direction="row" gap={1}>
-                  <CategoryIcon category={job.category} />
-                  {job.name}
-                </Stack>
-              </td>
-              <td>
-                <Stack
-                  alignItems="center"
-                  direction="row"
-                  flexWrap="wrap"
-                  gap={0.5}
-                >
-                  <Coins amount={job.money || 0} />
-                </Stack>
-              </td>
-              <td>
-                <JobAssignment
-                  familyKey={familyKey}
-                  job={job}
-                  key={job.key}
-                  members={members}
-                />
-              </td>
-              <td>
-                <JobActions familyKey={familyKey} job={job} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Job</TableCell>
+              <TableCell>Money</TableCell>
+              <TableCell>Assigned to</TableCell>
+              <TableCell style={{ width: '96px' }} />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {jobs.map((job) => (
+              <TableRow key={job.key}>
+                <TableCell>
+                  <Stack alignItems="center" direction="row" gap={1}>
+                    <CategoryIcon category={job.category} />
+                    {job.name}
+                  </Stack>
+                </TableCell>
+                <TableCell>
+                  <Stack
+                    alignItems="center"
+                    direction="row"
+                    flexWrap="wrap"
+                    gap={0.5}
+                  >
+                    {toPoundsPence(job.reward?.amount || 0)}
+                  </Stack>
+                </TableCell>
+                <TableCell>
+                  <JobAssignment
+                    familyKey={familyKey}
+                    job={job}
+                    key={job.key}
+                    members={members}
+                  />
+                </TableCell>
+                <TableCell>
+                  <JobActions
+                    familyKey={familyKey}
+                    job={job}
+                    members={members}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
       <Box marginTop={2}>
-        <NewJobButton familyKey={familyKey} />
+        <NewJobButton familyKey={familyKey} members={members} />
       </Box>
     </>
   )

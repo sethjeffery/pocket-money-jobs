@@ -1,8 +1,9 @@
 'use client'
 
 import { deleteFamily, saveFamily } from '@/app/actions/families'
+import FieldState from '@/app/components/field-state'
 import { BLANK_FAMILY, Family } from '@/app/store/families'
-import { FormControl, FormHelperText, TextField } from '@mui/material'
+import { FormControl, TextField } from '@mui/material'
 import { Controller, useFormContext } from 'react-hook-form'
 import GenericForm from './generic-form'
 
@@ -22,14 +23,12 @@ function FormContent() {
         <FormControl error={!!fieldState.error}>
           <TextField
             autoFocus
-            placeholder="Name"
+            label="Name"
             size="medium"
             {...field}
             slotProps={{ input: { ref } }}
           />
-          {fieldState.error && (
-            <FormHelperText>{fieldState.error?.message}</FormHelperText>
-          )}
+          <FieldState {...fieldState} />
         </FormControl>
       )}
       rules={{ required: 'Name is required' }}

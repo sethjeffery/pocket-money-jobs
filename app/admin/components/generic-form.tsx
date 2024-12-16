@@ -65,15 +65,7 @@ export default function GenericForm<T extends Model>({
             {children}
           </Stack>
         </DialogContent>
-        <DialogActions
-          sx={(theme) => ({
-            [theme.breakpoints.down('sm')]: { flexDirection: 'column' },
-          })}
-        >
-          <LoadingButton isLoading={isSaving} type="submit">
-            Save changes
-          </LoadingButton>
-          <Button onClick={onClose}>Cancel</Button>
+        <DialogActions>
           {model.key && deleteAction && (
             <Button
               color="error"
@@ -86,6 +78,10 @@ export default function GenericForm<T extends Model>({
               Delete
             </Button>
           )}
+          <Button onClick={onClose}>Cancel</Button>
+          <LoadingButton isLoading={isSaving} type="submit" variant="contained">
+            Save changes
+          </LoadingButton>
         </DialogActions>
       </form>
     </FormProvider>

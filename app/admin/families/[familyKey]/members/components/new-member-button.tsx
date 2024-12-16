@@ -1,7 +1,7 @@
 'use client'
 
 import { Button, Dialog } from '@mui/material'
-import { Sparkle } from '@phosphor-icons/react/Sparkle'
+import { Person } from '@phosphor-icons/react/dist/ssr'
 import { useState } from 'react'
 import MemberForm from './member-form'
 
@@ -12,8 +12,9 @@ export default function NewMemberButton({ familyKey }: { familyKey: string }) {
     <>
       <Button
         color="primary"
-        endIcon={<Sparkle size={20} weight="fill" />}
+        endIcon={<Person size={20} weight="fill" />}
         onClick={() => setOpen(true)}
+        variant="contained"
       >
         New family member
       </Button>

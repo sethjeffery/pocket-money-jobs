@@ -1,21 +1,22 @@
-import { RewardType as Type } from '../constants/reward-type'
+import { RewardCategory } from '../constants/reward-categories'
 import { Reward } from '../types/reward'
 import { delModel, getAllModels, getModel, Model, setModel } from './model'
 
-export interface RewardType extends Model {
-  createdAt: string
-  reward: Reward
-}
+export type RewardType = Reward &
+  Model & {
+    createdAt: string
+    familyKey: string
+  }
 
 const NAMESPACE = 'reward-types'
 
 export const BLANK_REWARD_TYPE = Object.freeze<RewardType>({
   createdAt: new Date().toISOString(),
+  familyKey: '',
   key: '',
-  reward: {
-    description: '',
-    type: Type.none,
-  },
+  description: '',
+  amount: 0,
+  category: RewardCategory.none,
   updatedAt: new Date().toISOString(),
 })
 

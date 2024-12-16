@@ -1,16 +1,15 @@
-import type { Categories } from '../constants/categories'
+import type { JobCategories } from '../constants/job-categories'
+import { RewardCategory } from '../constants/reward-categories'
 import { Reward } from '../types/reward'
-import { Member } from './members'
 import { delModel, getAllModels, getModel, Model, setModel } from './model'
 
 export interface Job extends Model {
-  assignedTo: Pick<Member, 'key' | 'name'> | null
-  category: Categories
+  assignedTo: string[]
+  category: JobCategories
   completedAt: string | null
   createdAt: string
   familyKey: string
   jobTypeKey: string
-  money: number
   name: string
   reward: Reward | null
 }
@@ -23,11 +22,15 @@ export const BLANK_JOB = Object.freeze<Job>({
   key: '',
   jobTypeKey: '',
   name: '',
-  money: 100,
-  assignedTo: null,
+  assignedTo: [],
   createdAt: new Date().toISOString(),
   completedAt: null,
-  reward: null,
+  reward: {
+    amount: 0,
+    description: '',
+    duration: 0,
+    category: RewardCategory.none,
+  },
   updatedAt: new Date().toISOString(),
 })
 

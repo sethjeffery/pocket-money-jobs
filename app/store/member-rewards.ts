@@ -1,5 +1,5 @@
 import { Reward } from '../types/reward'
-import { getModel, Model, setModel } from './model'
+import { getAllModels, getModel, Model, setModel } from './model'
 import newKey from './new-key'
 
 const NAMESPACE = 'member-rewards'
@@ -7,19 +7,24 @@ const NAMESPACE = 'member-rewards'
 export type MemberReward = Reward & Model
 
 export interface MemberRewards extends Model {
+  familyKey: string
+  memberKey: string
   rewards: MemberReward[]
 }
 
 export const BLANK_MEMBER_REWARD = Object.freeze<MemberRewards>({
+  familyKey: '',
   key: '',
+  memberKey: '',
   rewards: [],
   updatedAt: new Date().toISOString(),
 })
 
 export const getMemberRewards = (familyKey: string, memberKey: string) =>
-  getModel<MemberRewards>([NAMESPACE, familyKey, memberKey]).then(
-    (res) => res?.rewards ?? []
-  )
+  getModel<MemberRewards>([NAMESPACE, familyKey, memberKey])
+
+export const getAllMemberRewards = (familyKey: string) =>
+  getAllModels<MemberRewards>([NAMESPACE, familyKey])
 
 export const pushMemberReward = async (
   familyKey: string,
@@ -32,6 +37,8 @@ export const pushMemberReward = async (
 
   return setModel<MemberRewards>([NAMESPACE, familyKey, memberKey], {
     ...memberRewards,
+    familyKey,
+    memberKey,
     rewards: [
       ...memberRewards.rewards,
       { ...reward, key: await newKey(), updatedAt: new Date().toISOString() },
@@ -50,6 +57,8 @@ export const popMemberReward = async (
 
   return setModel<MemberRewards>([NAMESPACE, familyKey, memberKey], {
     ...memberRewards,
+    familyKey,
+    memberKey,
     rewards: memberRewards.rewards.filter((r) => r.key !== reward.key),
   })
 }

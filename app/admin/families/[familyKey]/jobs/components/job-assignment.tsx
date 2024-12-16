@@ -1,12 +1,11 @@
 'use client'
 
 import { Member } from '@/app/store/members'
-import { IconButton, MenuItem, OutlinedInput, Select } from '@mui/material'
-import { X } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useTransition } from 'react'
 import { assignJob } from '../../../../../actions/jobs'
 import { Job } from '../../../../../store/jobs'
+import AssignedToSelect from './assigned-to-select'
 
 interface JobAssignmentProps {
   familyKey: string
@@ -18,7 +17,7 @@ function JobAssignment({ job, members }: JobAssignmentProps) {
   const [isSaving, startSaving] = useTransition()
   const router = useRouter()
   const handleAssign = useCallback(
-    (key: string, assignTo: string | null) => {
+    (key: string, assignTo: string[]) => {
       startSaving(async () => {
         await assignJob(job.familyKey, key, assignTo)
         router.refresh()
@@ -28,25 +27,21 @@ function JobAssignment({ job, members }: JobAssignmentProps) {
   )
 
   return (
-    <Select
+    <AssignedToSelect
       disabled={isSaving}
-      endAdornment={
-        job.assignedTo && (
-          <IconButton onClick={() => handleAssign(job.key, null)}>
-            <X />
-          </IconButton>
+      fullWidth
+      members={members}
+      onChange={(event) =>
+        handleAssign(
+          job.key,
+          Array.isArray(event.target.value)
+            ? event.target.value
+            : [event.target.value]
         )
       }
-      input={<OutlinedInput label="Select one..." />}
-      onChange={(event) => handleAssign(job.key, event.target.value)}
-      value={job.assignedTo?.key ?? ''}
-    >
-      {members.map((member) => (
-        <MenuItem key={member.key} value={member.key}>
-          {member.name}
-        </MenuItem>
-      ))}
-    </Select>
+      size="small"
+      value={job.assignedTo || []}
+    />
   )
 }
 

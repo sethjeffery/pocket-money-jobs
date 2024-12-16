@@ -1,36 +1,8 @@
-import { RewardType } from '../constants/reward-type'
+import { RewardCategory } from '../constants/reward-categories'
 
-export interface BaseReward {
-  description: string
-  type: RewardType
-}
-
-export interface NoReward extends BaseReward {
-  type: RewardType.none
-}
-
-export interface MoneyReward extends BaseReward {
+export interface Reward {
   amount: number
-  type: RewardType.money
+  description: string
+  duration: number
+  category: RewardCategory
 }
-
-export interface InternetReward extends BaseReward {
-  durationSeconds: number
-  type: RewardType.internet
-}
-
-export interface PlayTimeReward extends BaseReward {
-  durationSeconds: number
-  type: RewardType.playTime
-}
-
-export interface VoucherReward extends BaseReward {
-  type: RewardType.voucher
-}
-
-export type Reward =
-  | MoneyReward
-  | InternetReward
-  | PlayTimeReward
-  | VoucherReward
-  | NoReward
